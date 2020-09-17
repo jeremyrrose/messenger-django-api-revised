@@ -6,14 +6,14 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name_plural = 'UserProfiles'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    avatar = models.CharField(max_length=1200)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='user')
+    avatar = models.CharField(max_length=800)
     timestamp = models.DateTimeField(auto_now_add=True)
     last_update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str("Avatar is :  " + str(self.avatar) + "   " +
-                   "User is :  " + str(self.user) + "   " +
+        return str("[User: " + str(self.user) + "]   " +
+                   "    [Avatar: " + str(self.avatar) + "]   " +
                    str(self.last_update_at))
 
 

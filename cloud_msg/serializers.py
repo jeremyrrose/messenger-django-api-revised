@@ -19,9 +19,10 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    # id = serializers.ReadOnlyField(source='user.id')
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = UserProfile
-        fields = ('user', 'avatar',
+        fields = ('id', 'user', 'avatar',
                   'timestamp', 'last_update_at')

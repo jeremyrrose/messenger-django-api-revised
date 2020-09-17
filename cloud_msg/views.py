@@ -48,7 +48,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
 
     def get_queryset(self):
-        return self.request.user, self.request.avatar
+        return UserProfile.objects.all()
+        # self.request.user, self.request.avatar
         # UserProfile.objects.all()
 
     def create(self, request, *args, **kwargs):
@@ -60,3 +61,12 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def destroy(self, request, *args, **kwargs):
+        # userprofile = UserProfile.objects.get(pk=self.kwargs["pk"])
+        return super().destroy(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        userprofile = UserProfile.objects.get(pk=self.kwargs["pk"])
+        return super().update(request, *args, **kwargs)
+
