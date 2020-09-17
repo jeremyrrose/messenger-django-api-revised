@@ -7,15 +7,13 @@ class UserProfile(models.Model):
         verbose_name_plural = 'UserProfiles'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    username = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
     avatar = models.CharField(max_length=1200)
     timestamp = models.DateTimeField(auto_now_add=True)
     last_update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str("Avatar is :  " + str(self.avatar) + "   " +
-                   "Username is :  " + str(self.username) + "   " +
+                   "User is :  " + str(self.user) + "   " +
                    str(self.last_update_at))
 
 

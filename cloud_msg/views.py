@@ -48,9 +48,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
 
     def get_queryset(self):
-        return UserProfile.objects.all()
-
-        # self.request.user, self.request.avatar
+        return self.request.user, self.request.avatar
+        # UserProfile.objects.all()
 
     def create(self, request, *args, **kwargs):
         if request.user.is_anonymous:
@@ -60,4 +59,4 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(sender=self.request.user)
+        serializer.save(user=self.request.user)
