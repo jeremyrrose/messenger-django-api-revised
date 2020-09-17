@@ -4,7 +4,7 @@ from authentication.models import User
 
 class UserProfile(models.Model):
     class Meta:
-        verbose_name_plural = 'userprofiles'
+        verbose_name_plural = 'UserProfiles'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     username = models.CharField(max_length=200)

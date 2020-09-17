@@ -8,6 +8,7 @@ from authentication.models import User
 # ALLOWS FIELDS OF YOUR MODEL TO BE DISPLAYED TO YOUR USER
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.ReadOnlyField(source='sender.username')
+
     # receiver = serializers.CharField(source='receiver.username')
     # conversations = ConversationSerializer(many=True, read_only=True, required=False)
 
@@ -16,13 +17,11 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ('id', 'sender', 'receiver', 'message',
                   'timestamp', 'last_update_at', 'is_read')
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    sender = serializers.ReadOnlyField(source='sender.username')
 
-    # receiver = serializers.CharField(source='receiver.username')
-    # conversations = ConversationSerializer(many=True, read_only=True, required=False)
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'avatar', 'receiver', 'message',
-                  'timestamp', 'last_update_at', 'is_read')
+        fields = ('user', 'username', 'password', 'avatar', 'message',
+                  'timestamp', 'last_update_at')

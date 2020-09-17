@@ -3,10 +3,11 @@ from django.conf.urls import url
 
 
 # MAKE SURE TO IMPORT YOUR VIEWS
-from .views import MessageViewSet
+from .views import MessageViewSet, UserProfileViewSet
 
 router = routers.DefaultRouter()
 router.register('messages', MessageViewSet, basename='messages')
+router.register('UserProfiles', UserProfileViewSet, basename='UserProfiles')
 # router.register('conversations', ConversationViewSet, basename='conversations')
 
 custom_urlpatterns = [
