@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Message
+from .models import Message, UserProfile
 # from django.contrib.auth.models import User, Group
 from authentication.models import User
 
@@ -9,10 +9,20 @@ from authentication.models import User
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.ReadOnlyField(source='sender.username')
     # receiver = serializers.CharField(source='receiver.username')
-
     # conversations = ConversationSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Message
         fields = ('id', 'sender', 'receiver', 'message',
+                  'timestamp', 'last_update_at', 'is_read')
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    sender = serializers.ReadOnlyField(source='sender.username')
+
+    # receiver = serializers.CharField(source='receiver.username')
+    # conversations = ConversationSerializer(many=True, read_only=True, required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'avatar', 'receiver', 'message',
                   'timestamp', 'last_update_at', 'is_read')
