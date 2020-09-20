@@ -8,7 +8,7 @@ from authentication.models import User
 # ALLOWS FIELDS OF YOUR MODEL TO BE DISPLAYED TO YOUR USER
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.ReadOnlyField(source='sender.username')
-
+    # receiver = serializers.CharField(source='receiver.username')
     # receiver = serializers.CharField(source='receiver.username')
     # conversations = ConversationSerializer(many=True, read_only=True, required=False)
 
