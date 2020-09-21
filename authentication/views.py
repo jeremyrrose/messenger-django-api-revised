@@ -1,10 +1,11 @@
-from rest_framework import status  # this helps us to know HTTP status of our request
+from rest_framework import status, viewsets, generics  # this helps us to know HTTP status of our request
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response  # We need this to convert DB query to JSON
 from rest_framework.views import APIView
 # Not all the models need CRUD, sometimes all we need to do is read
 from rest_framework.viewsets import ReadOnlyModelViewSet
 # we can allow all the users to see the view
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import RegistrationSerializer, LoginSerializer, UserListSerializer
 from .models import User
@@ -53,8 +54,15 @@ class UserListViewSet(ReadOnlyModelViewSet):
     """
     This view set automatically provides `list` and `detail` actions.
     """
-
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = UserListSerializer
 
+
+class SingleUser(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserListSerializer
+    model = User
+
+    def get_object(self, queryset=None):
+        return self.request.user
