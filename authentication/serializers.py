@@ -25,6 +25,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.ModelSerializer):
     """Serializer login requests and signin user"""
+    # id = serializers.ReadOnlyField(User, max_length=255, read_only=True)
     email = serializers.CharField(max_length=255, read_only=True)
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=255, write_only=True)
@@ -32,7 +33,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'token')
+        fields = ('id', 'username', 'email', 'password', 'token')
 
     def validate(self, data):
         username = data.get('username', None)
@@ -60,6 +61,7 @@ class LoginSerializer(serializers.ModelSerializer):
                 'This user has been deactivated'
             )
         return {
+            "id": user.id,
             "username": user.username,
             "email": user.email,
             "token": user.token
