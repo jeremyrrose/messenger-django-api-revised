@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from rest_framework import viewsets
+from rest_framework import viewsets, views
 from rest_framework.exceptions import (
     ValidationError, PermissionDenied
 )
@@ -69,4 +69,18 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         userprofile = UserProfile.objects.get(pk=self.kwargs["pk"])
         return super().update(request, *args, **kwargs)
+
+
+class UserSearch(views.APIView):
+
+    permission_classes = (AllowAny,)
+    serializer_class = UserProfileSerializer
+
+    def get(self, request, *args, **kwargs):
+        search_string = kwargs.get('search_string')
+        if search_string:
+            users = UserProfile.objects.filter(user__username__icontains=search_string)
+            serializer = UserProfileSerializer(users, many=True)
+            print(users)
+            return Response(serializer.data)
 
