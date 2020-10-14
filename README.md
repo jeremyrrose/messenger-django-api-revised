@@ -2,6 +2,8 @@
 
 Forked from [Magdalena K's Cloud Message API](https://github.com/studiosemantica/p4backend/) for collaborative use.
 
+Deployed at https://messenger-django-api.herokuapp.com/
+
 ## Description
 ### Cloud Message
 
@@ -60,5 +62,7 @@ urlpatterns = [
 ### API
 
 /cloud_msg/UserProfiles : Standard viewset endpoints
+
 /cloud_msg/messages : Standard viewset endpoints
+
 /cloud_msg/user_search/<str:search_string> : GET returns UserProfiles whose `user.username` partially matches `search_string`
