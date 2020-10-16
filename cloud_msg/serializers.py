@@ -20,6 +20,7 @@ class MessageSerializer(serializers.ModelSerializer):
     sender_name = serializers.ReadOnlyField(source='sender.username')
     receiver_name = serializers.ReadOnlyField(source='receiver.username')
     sender_avatar = serializers.ReadOnlyField(source='sender.profile.avatar')
+    receiver_avatar = serializers.ReadOnlyField(souece='receiver.profile.avatar')
     # sender_profile = UserProfileSerializer(read_only=True, required=False)
 
     # receiver = serializers.CharField(source='receiver.username')
