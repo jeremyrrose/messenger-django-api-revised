@@ -7,7 +7,7 @@ class UserProfile(models.Model):
         verbose_name_plural = 'UserProfiles'
 
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='profile')
-    avatar = models.CharField(max_length=800)
+    avatar = models.CharField(max_length=800, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     last_update_at = models.DateTimeField(auto_now=True)
 
