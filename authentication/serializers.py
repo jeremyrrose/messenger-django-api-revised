@@ -22,18 +22,25 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
 
+class ProfileIdField(serializers.ReadOnlyField):
+    """
+    hacky solution to return profile id on login for users with profiles
+    """
+    def to_representation(self, value):
+        return value
 
 class LoginSerializer(serializers.ModelSerializer):
     """Serializer login requests and signin user"""
-    # id = serializers.ReadOnlyField(User, max_length=255, read_only=True)
+    # id = serializers.ReadOnlyField(max_length=255, read_only=True)
     email = serializers.CharField(max_length=255, read_only=True)
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=255, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
+    profile = ProfileIdField(read_only=True, required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'token')
+        fields = ('id', 'username', 'email', 'password', 'token', 'profile')
 
     def validate(self, data):
         username = data.get('username', None)
@@ -60,13 +67,18 @@ class LoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'This user has been deactivated'
             )
+        try:
+            profile = user.profile.id
+        except:
+            profile = None
+
         return {
             "id": user.id,
             "username": user.username,
             "email": user.email,
-            "token": user.token
+            "token": user.token,
+            "profile": profile
         }
-
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
